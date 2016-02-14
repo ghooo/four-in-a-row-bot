@@ -16,7 +16,10 @@
 //    file that was distributed with this source code.
 
 #include "field.h"
-#include "botAI.h"
+#include "randomAI.h"
+#include "defensiveAI.h"
+#include "aggressiveAI.h"
+#include "minimaxAI.h"
 
 #include <iostream>
 #include <string>
@@ -24,9 +27,22 @@
 
 class BotParser {
 public:
-	BotParser() {
+	BotParser(int difficulty = 1) {
 		field_ = new Field(0,0);
-		botAI_ = new BotAI(field_);
+        switch(difficulty) {
+            case 1:
+                botAI_ = new RandomAI(field_);
+                break;
+            case 2:
+                botAI_ = new DefensiveAI(field_);
+                break;
+            case 3:
+                botAI_ = new AggressiveAI(field_);
+                break;
+            case 4:
+                botAI_ = new MinimaxAI(field_);
+                break;
+        }
 	}
 	void run() {
 		std::string line;
@@ -35,7 +51,6 @@ public:
 				continue;
 			}
 			std::vector<std::string> parts = split(line, ' ');
-            
             if(parts[0] == "settings") {
                 if (parts[1] == "field_columns") {
                     field_->setColumns(stoi(parts[2]));
@@ -44,7 +59,7 @@ public:
                     field_->setRows(stoi(parts[2]));
                 }
                 if (parts[1] == "your_botid") {
-                    botId_ = stoi(parts[2]);
+                    botAI_->setBotId(stoi(parts[2]));
                 }
             } else if(parts[0] == "update") { /* new field data */
                 if (parts[2] == "field") {
@@ -54,7 +69,7 @@ public:
             } else if(parts[0] == "action") {
                 if (parts[1] == "move") { /* move requested */
                     int column = botAI_->makeTurn();
-                    field_->addDisc(column, botId_);
+                    field_->addDisc(column, botAI_->getBotId());
                     std::cout << std::string(*field_) << std::endl;
                     std::cout << "place_disc "  << column << std::endl;
                 }
@@ -71,5 +86,4 @@ public:
 private:
 	Field *field_;
 	BotAI *botAI_;
-	int botId_;
 };

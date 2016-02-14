@@ -128,13 +128,22 @@ public:
     bool isColumnFull(int col) {
     	return board_[col][0] != 0;
     }
-    bool getNrColumns() {
+    int getNrColumns() {
     	return cols_;
     }
     int getNrRows() {
     	return rows_;
     }
-
+    int getMoveRow(int col) {
+		if(col < cols_) {
+			for(int j = rows_-1; j >= 0; j--) {
+				if(board_[col][j] == 0) {
+					return j;
+				}
+			}
+		}
+		return -1;
+    }
 	int lastColumn() {
 		return lastColumn_;
 	}

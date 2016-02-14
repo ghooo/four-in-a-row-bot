@@ -15,40 +15,16 @@
 //    For the full copyright and license information, please view the LICENSE
 //    file that was distributed with this source code.
 
-#ifndef BOTAI_H
-#define BOTAI_H
+#ifndef RANDOMAI_H
+#define RANDOMAI_H
 
-#include "field.h"
+#include "botAI.h"
 
-class BotAI {
+class RandomAI: public BotAI {
 public:
-
-	BotAI(Field *field) {
-		field_ = field;
-		botId_ = -1;
+	RandomAI(Field* field) : BotAI(field) {}
+	int makeTurn() {
+		return BotAI::makeTurn();
 	}
-	void setBotId(int botId) {
-		botId_ = botId;
-	}
-	int getBotId() {
-		return botId_;
-	}
-	int getOppId() {
-		return 3-botId_;
-	}
-	virtual int makeTurn() {
-		std::vector<int> validMoves;
-		for(int column = 0; column < field_->getNrColumns(); column++) {
-			if(field_->isValidMove(column)) {
-				validMoves.push_back(column);
-			}
-		}
-		return validMoves[rand()%validMoves.size()];
-
-	};
-	virtual ~BotAI() {}
-protected:
-	Field *field_;
-	int botId_;
 };
-#endif //BOTAI_H
+#endif //RANDOMAI_H
