@@ -15,43 +15,41 @@
 //    For the full copyright and license information, please view the LICENSE
 //    file that was distributed with this source code.
 
-#ifndef DEFENSIVEAI_H
-#define DEFENSIVEAI_H
+#ifndef DEFENSIVEAIV01_H
+#define DEFENSIVEAIV01_H
 
 #include "botAI.h"
 
-class DefensiveAI: public BotAI {
+class DefensiveAIv01: public BotAI {
 public:
-	DefensiveAI(Field* field) : BotAI(field) {}
+	DefensiveAIv01(Field* field) : BotAI(field) {}
 
 	int makeTurn() {
-		std::vector<int> validMoves;
 		for(int column = 0; column < field_->getNrColumns(); column++) {
-			int priority = getColumnPriority(column);
-			if(priority >= (1<<3)) {
+			if(isLosingColumn(column)) {
 				return column;
 			}
-			for(int i = 0; i < priority; i++) {
-				validMoves.push_back(column);
-			}
 		}
-		return validMoves[rand()%validMoves.size()];
+		return BotAI::makeTurn();
 	}
 private:
-	int getColumnPriority(int column) {
+	bool isLosingColumn(int column) {
 		int row = field_->getMoveRow(column);
 		if(row == -1) {
-			return 0;
+			return false;
 		}
+		return isLosingCell(column, row);
+	}
+	bool isLosingCell(int column, int row) {
 		int dc[] = {0,1,1,1};
 		int dr[] = {1,0,1,-1};
-		int ret = 0;
 		for(int i = 0; i < 4; i++) {
-			int count = countCells(column, row,dc[i],dr[i], getOppId()) + 
-					countCells(column, row,-dc[i],-dr[i],getOppId());
-			ret = std::max(ret,1<<count);
+			if(countCells(column, row,dc[i],dr[i], getOppId()) + 
+					countCells(column, row,-dc[i],-dr[i],getOppId()) >= 3) {
+				return true;
+			}
 		}
-		return ret;
+		return false;
 	}
 	int countCells(int column, int row, int dc, int dr, int id) {
 		int ret = 0;
@@ -65,4 +63,4 @@ private:
 		return ret;
 	}
 };
-#endif //DEFENSIVEAI_H
+#endif //DEFENSIVEAIV01_H

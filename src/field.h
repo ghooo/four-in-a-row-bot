@@ -97,6 +97,9 @@ public:
 	bool isValidMove(int col) {
 		return board_[col][0] == 0;
 	}
+	bool is2DiscsPossible(int col) {
+		return board_[col][1] == 0;
+	}
 	std::string getLastError() {
 		return lastError_;
 	}

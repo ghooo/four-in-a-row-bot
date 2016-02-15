@@ -17,8 +17,11 @@
 
 #include "field.h"
 #include "randomAI.h"
-#include "defensiveAI.h"
-#include "aggressiveAI.h"
+#include "defensiveAIv01.h"
+#include "defensiveAIv02.h"
+#include "defensiveAIv03.h"
+#include "aggressiveAIv01.h"
+#include "aggressiveAIv02.h"
 #include "minimaxAI.h"
 
 #include <iostream>
@@ -30,16 +33,25 @@ public:
 	BotParser(int difficulty = 1) {
 		field_ = new Field(0,0);
         switch(difficulty) {
-            case 1:
+            case 11:
                 botAI_ = new RandomAI(field_);
                 break;
-            case 2:
-                botAI_ = new DefensiveAI(field_);
+            case 21:
+                botAI_ = new DefensiveAIv01(field_);
                 break;
-            case 3:
-                botAI_ = new AggressiveAI(field_);
+            case 22:
+                botAI_ = new DefensiveAIv02(field_);
                 break;
-            case 4:
+            case 23:
+                botAI_ = new DefensiveAIv03(field_);
+                break;
+            case 31:
+                botAI_ = new AggressiveAIv01(field_);
+                break;
+            case 32:
+                botAI_ = new AggressiveAIv02(field_);
+                break;
+            case 41:
                 botAI_ = new MinimaxAI(field_);
                 break;
         }
