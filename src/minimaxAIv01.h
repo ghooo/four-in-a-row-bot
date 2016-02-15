@@ -44,7 +44,7 @@ public:
 		minimax mm = max(field_,1);
 		return mm.move;
 	}
-// private:
+private:
 	int evaluate(Field* field) {
 		int largeValue = 1e6;
 		// std::cout << 1 << std::endl;		
