@@ -22,7 +22,9 @@
 #include "defensiveAIv03.h"
 #include "aggressiveAIv01.h"
 #include "aggressiveAIv02.h"
-#include "minimaxAI.h"
+#include "aggressiveAIv03.h"
+#include "aggressiveAIv04.h"
+#include "minimaxAIv01.h"
 
 #include <iostream>
 #include <string>
@@ -33,27 +35,36 @@ public:
 	BotParser(int difficulty = 1) {
 		field_ = new Field(0,0);
         switch(difficulty) {
-            case 11:
+            case 11: //v1
                 botAI_ = new RandomAI(field_);
                 break;
-            case 21:
+            case 21: 
                 botAI_ = new DefensiveAIv01(field_);
                 break;
-            case 22:
+            case 22: //v2
                 botAI_ = new DefensiveAIv02(field_);
                 break;
-            case 23:
+            case 23: //v3
                 botAI_ = new DefensiveAIv03(field_);
                 break;
-            case 31:
+            case 31: //v4
                 botAI_ = new AggressiveAIv01(field_);
                 break;
             case 32:
                 botAI_ = new AggressiveAIv02(field_);
                 break;
-            case 41:
-                botAI_ = new MinimaxAI(field_);
+            case 33:
+                botAI_ = new AggressiveAIv03(field_);
                 break;
+            case 34: //v5
+                botAI_ = new AggressiveAIv04(field_);
+                break;
+            case 41: //v6
+                botAI_ = new MinimaxAIv01(field_);
+                break;
+            default:
+                std::cerr << "AI BOT NOT FOUND. TERMINATING..." << std::endl;
+                exit(1);
         }
 	}
 	void run() {
@@ -82,7 +93,6 @@ public:
                 if (parts[1] == "move") { /* move requested */
                     int column = botAI_->makeTurn();
                     field_->addDisc(column, botAI_->getBotId());
-                    std::cout << std::string(*field_) << std::endl;
                     std::cout << "place_disc "  << column << std::endl;
                 }
             }

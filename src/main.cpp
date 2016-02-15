@@ -2,7 +2,7 @@
 #include "botParser.h"
 using namespace std;
 int main(int argc, char **argv) {
-	int difficulty = 31;
+	int difficulty = 41;
 	if(argc > 1) {
 		difficulty = atoi(argv[1]);		
 	}

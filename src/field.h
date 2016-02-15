@@ -80,6 +80,17 @@ public:
 		}
 		return false;
 	}
+	bool removeDisc(int col) {
+		if(col < cols_) {
+			for(int j = 0; j < rows_; j++) {
+				if(board_[col][j]) {
+					board_[col][j] = 0;
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	void parseFromString(std::string s) {
 		std::replace(s.begin(), s.end(), ';', ',');
 		std::vector<std::string> r = split(s,',');
@@ -106,16 +117,16 @@ public:
     operator std::string() const
     {
     	std::string r = "";
-    	int counter = 0;
     	for(int j = 0; j < rows_; j++) {
     		for(int i = 0; i < cols_; i++) {
-    			if(counter > 0) {
-    				r += ',';
-    			}
-    			r += std::to_string(board_[i][j]);
-    			counter++;
+    			if(board_[i][j] == 0) r += "...  ";
+    			if(board_[i][j] == 1) r += "111  ";
+    			if(board_[i][j] == 2) r += "222  ";
     		}
+    		r += '\n';
     	}
+    	r += '\n';
+    	r += '\n';
     	return r;
     }
     bool isFull() {
