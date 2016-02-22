@@ -47,6 +47,7 @@ public:
 	Field(int cols, int rows) {
 		cols_ = cols;
 		rows_ = rows;
+		lastColumn_ = -1;
 		initBoard();
 	}
 	void setColumns(int cols) {
@@ -97,6 +98,9 @@ public:
 		int counter = 0;
 		for(int j = 0; j < rows_; j++) {
 			for(int i = 0; i < cols_; i++) {
+				if(board_[i][j] != stoi(r[counter])) {
+					lastColumn_ = i;
+				}
 				board_[i][j] = stoi(r[counter]);
 				counter++;
 			}
@@ -158,7 +162,7 @@ public:
 		}
 		return -1;
     }
-	int lastColumn() {
+	int getLastColumn() {
 		return lastColumn_;
 	}
 private:

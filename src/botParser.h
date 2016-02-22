@@ -25,6 +25,12 @@
 #include "aggressiveAIv03.h"
 #include "aggressiveAIv04.h"
 #include "minimaxAIv01.h"
+#include "minimaxAIv02.h"
+#include "minimaxAIv03.h"
+#include "minimaxAIv04.h"
+#include "minimaxAIv05.h"
+#include "minimaxAIv06.h"
+#include "minimaxAIv07.h"
 
 #include <iostream>
 #include <string>
@@ -62,6 +68,24 @@ public:
             case 41: //v6
                 botAI_ = new MinimaxAIv01(field_);
                 break;
+            case 42: //v7
+                botAI_ = new MinimaxAIv02(field_);
+                break; 
+            case 43: //v8
+                botAI_ = new MinimaxAIv03(field_);
+                break; 
+            case 44: //v9
+                botAI_ = new MinimaxAIv04(field_);
+                break; 
+            case 45: //12
+                botAI_ = new MinimaxAIv05(field_);
+                break; 
+            case 46: //13
+                botAI_ = new MinimaxAIv06(field_);
+                break; 
+            case 47: //14
+                botAI_ = new MinimaxAIv07(field_);
+                break; 
             default:
                 std::cerr << "AI BOT NOT FOUND. TERMINATING..." << std::endl;
                 exit(1);
